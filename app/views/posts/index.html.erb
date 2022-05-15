@@ -1,4 +1,6 @@
-<div class="test">First post</div> <br/>
-<div class="test">Second post</div><br/>
-<div class="test">Third post</div><br/>
-<div class="test">Fourth post</div><br/>
+<div class="postsindex">
+
+  <% @posts.each do |p| %>
+    <div class="test"> <%= p.profile.name %>: <%= p.body %> </div> <br/>
+  <% end %>
+</div>
