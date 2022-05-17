@@ -13,14 +13,13 @@
 
 /* Posts#index view */
 
-.test {
-  border: 2px solid red;
-  width: 500px
-}
-
 .postsindex{
   display: flex;
-  border: 2px solid blue;
   flex-direction: column;
   align-items: center;
+}
+
+.post-input{
+  display: flex;
+  gap: 10px
 }

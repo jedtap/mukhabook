@@ -1,14 +1,25 @@
 <div class="postsindex">
 
   <div data-turbolinks="false">
-    <%= form_with model: @post do |form| %> 
-      <%= form.text_field :body, placeholder: "Anything brewing?" %>
+    <%= form_with model: @post, class: "post-input" do |form| %> 
+      <%= form.text_field :body, placeholder: "Anything brewing?", class: "form-control", style: "width: 32rem; height: 38px;" %>
       <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
-      <%= form.submit %>
+      <%= form.submit class: "btn btn-success" %>
     <% end %>
   </div>
 
+  <br />
+
   <% @posts.each do |p| %>
-    <div class="test"> <%= p.profile.name %>: <%= p.body %> </div> <br/>
+    <div class="card"> <div class="card-body" style="width: 40rem;">
+      <h5 class="card-title">
+        <%= p.profile.name %>
+        <span class="card-subtitle mb-2 text-muted" style="font-size: 12px"> <%= p.created_at.strftime("%b %d, %Y - %l:%M %p ") %> </span>
+      </h5>
+      <p class="card-text"> <%= p.body %> </p>
+    </div> </div>
+    <br />
   <% end %>
 </div>
+
+<br /><br />

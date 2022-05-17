@@ -18,7 +18,6 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      flash[:notice] = "Successfully saved!"
       redirect_to posts_path
     else 
       flash[:notice] = "Some errors!"
