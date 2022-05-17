@@ -1,5 +1,13 @@
 <div class="postsindex">
 
+  <div data-turbolinks="false">
+    <%= form_with model: @post do |form| %> 
+      <%= form.text_field :body, placeholder: "Anything brewing?" %>
+      <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+      <%= form.submit %>
+    <% end %>
+  </div>
+
   <% @posts.each do |p| %>
     <div class="test"> <%= p.profile.name %>: <%= p.body %> </div> <br/>
   <% end %>

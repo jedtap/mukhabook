@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   resources :profiles
   devise_for :users
-  resources :posts, only: [:index]
-  resources :friends, only: [:index]
+  
+  resources :posts
+  # post "posty", to: "posts#create"
+  # get "posty", to: "posts#new"
 
-  # root "posts#index"
+  resources :friends  #  , only: [:index]
 
   devise_scope :user do
     authenticated :user do
