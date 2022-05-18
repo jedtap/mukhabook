@@ -1,1 +1,19 @@
-why hello therere
+<h2> Find a friend! </h2>
+
+<div class="friends-index">
+  <% @profiles.each do |p| %>
+    <a href="#">
+      <button type="button" class="btn btn-outline-success" style="width: 25rem;">
+          <h5> 
+            <%= p.name %>
+            <span style="font-size: 12px"> Since: <%= p.created_at.strftime("%b %Y") %> </span>
+          </h5>
+          <em>
+            <p style="font-size: 12px">
+              Last post: <%= p.posts.last.created_at.strftime("%b %d, %Y") %>
+            </p>
+          </em>
+      </button>
+    </a>
+  <% end %>
+</div>
