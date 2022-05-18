@@ -2,7 +2,7 @@
 
 <div class="friends-index">
   <% @profiles.each do |p| %>
-    <a href="#">
+    <a href=" <%= profile_path(p) %> ">
       <button type="button" class="btn btn-outline-success" style="width: 25rem;">
           <h5> 
             <%= p.name %>
