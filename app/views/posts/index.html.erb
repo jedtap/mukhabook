@@ -13,8 +13,10 @@
   <% @posts.each do |p| %>
     <div class="card"> <div class="card-body" style="width: 40rem;">
       <h5 class="card-title">
-        <%= p.profile.name %>
-        <span class="card-subtitle mb-2 text-muted" style="font-size: 12px"> <%= p.created_at.strftime("%b %d, %Y - %l:%M %p ") %> </span>
+        <%= link_to p.profile.name, profile_path(p.profile_id), class: "profile-link" %>
+        <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+          <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
+        </span>
       </h5>
       <p class="card-text"> <%= p.body %> </p>
     </div> </div>

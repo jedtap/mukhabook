@@ -10,9 +10,6 @@
   font-size: 12px;
 }
 
-
-/* Posts#index view */
-
 .postsindex{
   display: flex;
   flex-direction: column;
@@ -27,4 +24,9 @@
 .friends-index{
   display: flex;
   gap: 10px;
+}
+
+.profile-link{
+  color: #43474A;
+  text-decoration: none;
 }
