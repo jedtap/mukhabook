@@ -8,6 +8,9 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1 or /profiles/1.json
   def show
+    @profile = Profile.find(params[:id])
+    @post = Post.new
+    @posts = Post.where(profile_id: params[:id]).order(created_at: :desc)
   end
 
   # GET /profiles/new

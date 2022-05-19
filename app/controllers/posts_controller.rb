@@ -18,7 +18,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      redirect_to posts_path
+      redirect_back(fallback_location:"/")
     else 
       flash[:notice] = "Some errors!"
       render :new, status: :unprocessable_entity

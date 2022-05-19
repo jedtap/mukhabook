@@ -1,10 +1,33 @@
-<p style="color: green"><%= notice %></p>
+<div class="postsindex">
 
-<%= render @profile %>
+  <h5>Meet and greet</h5>
+  <h3><%= @profile.name %>!</h3>
 
-<div>
-  <%= link_to "Edit this profile", edit_profile_path(@profile) %> |
-  <%= link_to "Back to profiles", profiles_path %>
+  <% if current_user.profile.id.to_s  == params[:id].to_s %>
+    <br />
+    <div data-turbolinks="false">
+      <%= form_with model: @post, class: "post-input" do |form| %> 
+        <%= form.text_field :body, placeholder: "Anything brewing?", class: "form-control", style: "width: 32rem; height: 38px;" %>
+        <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+        <%= form.submit class: "btn btn-success" %>
+      <% end %>
+    </div>
+  <% end %>
 
-  <%= button_to "Destroy this profile", @profile, method: :delete %>
+  <br />
+
+  <% @posts.each do |p| %>
+    <div class="card"> <div class="card-body" style="width: 40rem;">
+      <h5 class="card-title">
+        <%= @profile.name %>
+        <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+          <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
+        </span>
+      </h5>
+      <p class="card-text"> <%= p.body %> </p>
+    </div> </div>
+    <br />
+  <% end %>
 </div>
+
+<br /><br />
