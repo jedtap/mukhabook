@@ -16,6 +16,12 @@
   align-items: center;
 }
 
+.postshow{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .post-input{
   display: flex;
   gap: 10px;

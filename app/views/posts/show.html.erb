@@ -1,1 +1,22 @@
-Why hello there
+<div class="postshow">
+  <div class="card"> <div class="card-body" style="width: 40rem;">
+    <h5 class="card-title">
+      <%= link_to @post.profile.name, profile_path(@post.profile_id), class: "profile-link" %>
+    </h5>
+
+    <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+      Created at: <%= @post.created_at.strftime("%b %d, %Y - %l:%M %p") %>
+    </span>
+
+    <br />
+  
+    <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+      Last update: <%= @post.updated_at.strftime("%b %d, %Y - %l:%M %p") %>
+    </span>
+
+    <br /><br />
+
+    <p class="card-text"> <%= @post.body %> </p>
+  </div> </div>
+  <br />
+</div>
