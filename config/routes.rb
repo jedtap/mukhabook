@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
 
   resources :profiles
   resources :posts
@@ -10,7 +10,8 @@ Rails.application.routes.draw do
       root 'posts#index', as: :authenticated_root
     end
     unauthenticated :user do
-      root 'devise/registrations#new', as: :unauthenticated_root
+      # root 'devise/registrations#new', as: :unauthenticated_root
+      root 'users/registrations#new', as: :unauthenticated_root
     end
   end
   

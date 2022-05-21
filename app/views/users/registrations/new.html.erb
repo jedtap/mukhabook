@@ -1,0 +1,62 @@
+<style>
+  .grid{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 5%;
+
+  }
+  .field{
+    margin: 10px 0;  
+  }
+</style>
+
+<h1>Connecting the World</h1>
+
+<div class="grid">
+  <div>    
+    <p> Be in touch with the people you love and care wherever you are. <br>
+    Hang out and have fun with millions of users. Join now! </p>
+    <%= image_tag("friends-beach.jpg", class: "img-fluid", alt: "Friends at a beach")  %> <br>
+    <em>
+      Photo by <a href="https://unsplash.com/@kimsondoan">Kimson Doan</a> on <a href= "https://unsplash.com/">Unsplash</a>
+    </em>
+  </div>
+
+  <div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <h2> Let the fun begin! </h2>
+
+      <div class="field">
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control", placeholder: "Name" %>
+      </div>
+
+
+      <div class="field">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Password" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up", class: "btn btn-success" %>
+      </div>
+    <% end %>
+
+    <div>
+      <br>Already have an account? <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>
+
+
+
+
