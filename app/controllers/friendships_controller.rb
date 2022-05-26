@@ -14,9 +14,15 @@ class FriendshipsController < ApplicationController
     redirect_back(fallback_location:"/")
   end
 
-  # def destroy
-  # end
+  def destroy
+    @fri = Friendship.where(user_id: current_user.id).where(friend_id: params[:id])
+    @fri_inv = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id)
+    
+    @fri.delete_all
+    @fri_inv.delete_all
 
-
+    flash[:notice] = "Unfriend done."
+    redirect_back(fallback_location:"/")
+  end
 
 end

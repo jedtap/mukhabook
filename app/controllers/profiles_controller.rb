@@ -13,6 +13,14 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     @post = Post.new
     @posts = Post.where(profile_id: params[:id]).order(created_at: :desc)
+
+    @fri = Friendship.where(user_id: current_user.id).where(friend_id: params[:id])
+    @fri_inv = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id)
+    @friends = true if @fri.present? || @fri_inv.present?
+
+    fri_c = @fri.where(confirmed: 1)
+    fri_inv_c = @fri_inv.where(confirmed: 1)
+    @confirmed = true if fri_c.present? || fri_inv_c.present?
   end
 
   # GET /profiles/new
