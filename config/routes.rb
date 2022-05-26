@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :profiles
   resources :posts
   resources :friends
+  resources :friendships, only: [:create, :destroy]
 
   devise_scope :user do
     authenticated :user do
