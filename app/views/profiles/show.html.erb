@@ -3,35 +3,35 @@
   <h5>Meet and greet</h5>
   <h3><%= @profile.name %>!</h3>
 
+
   <%# Add a friend, accept request, cancel request, unfriend button %>
   <% unless current_user.profile.id.to_s  == params[:id].to_s %>
     <div data-turbolinks="false">
 
       <% unless @friends %>
-        <%= form_with url: "/friendships", method: :post do |form| %> 
-          <%= form.number_field :user_id, value: current_user.id, type: :hidden %>
+        <%= form_with url: "/friendships", method: :post do |form| %>
           <%= form.number_field :friend_id, value: params[:id], type: :hidden %>
-          <%= form.number_field :confirmed, value: 0, type: :hidden %>
-          <%= form.submit class: "btn btn-success" %>
-        <% end %>      
+          <%= form.submit "Add friend", class: "btn btn-success" %>
+        <% end %>
       <% end %>
 
-      <% if @friends && @confirmed %>
-        Unfriend button
+      <% if @friends && @confirmed %> 
+        <%= button_to "Unfriend button", friendship_path, method: :delete, class: "btn btn-secondary"%>
       <% end %>
 
       <% if @fri_inv.present? && !@confirmed %>
-        Accept request
+        <%= button_to "Accept request", friendship_path, method: :patch, class: "btn btn-success"%>
       <% end %>
 
       <% if @fri.present? && !@confirmed %>
-        Cancel request
+        <%= button_to "Cancel request", friendship_path, method: :delete, class: "btn btn-light"%>
       <% end %>
 
     </div>
   <% end %>
 
 
+  <%# Input field %>
   <% if current_user.profile.id.to_s  == params[:id].to_s %>
     <br />
     <div data-turbolinks="false">
@@ -45,6 +45,8 @@
 
   <br />
 
+
+  <%# Generate posts %>
   <% @posts.each do |p| %>
     <div class="card"> <div class="card-body" style="width: 40rem;">
       <h5 class="card-title">

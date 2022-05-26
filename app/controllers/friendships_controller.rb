@@ -14,6 +14,15 @@ class FriendshipsController < ApplicationController
     redirect_back(fallback_location:"/")
   end
 
+  def update
+    @fri_inv = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id).first
+    @fri_inv.confirmed = 1
+    @fri_inv.save
+
+    flash[:notice] = "Friend request accepted!"
+    redirect_back(fallback_location:"/")
+  end
+
   def destroy
     @fri = Friendship.where(user_id: current_user.id).where(friend_id: params[:id])
     @fri_inv = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id)

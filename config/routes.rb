@@ -4,14 +4,13 @@ Rails.application.routes.draw do
   resources :profiles
   resources :posts
   resources :friends
-  resources :friendships, only: [:create, :destroy]
+  resources :friendships, only: [:create, :destroy, :update]
 
   devise_scope :user do
     authenticated :user do
       root 'posts#index', as: :authenticated_root
     end
     unauthenticated :user do
-      # root 'devise/registrations#new', as: :unauthenticated_root
       root 'users/registrations#new', as: :unauthenticated_root
     end
   end
