@@ -17,6 +17,23 @@
     <br /><br />
 
     <p class="card-text"> <%= @post.body %> </p>
+
+    <div class="like-comment">
+      <p style="font-size: 11px">Likes: <%= Like.where(post_id: params[:id]).count %> Comments: 69 </p>
+      <div class="post-buttons">
+        <% if Like.where(post_id: params[:id]).where(profile_id: current_user.profile.id).empty? %>
+          <%= form_with url: "/likes" do |form| %> 
+            <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+            <%= form.number_field :post_id, value: params[:id], type: :hidden %>
+            <%= form.submit "Like", class: "btn btn-light" %>
+          <% end %>
+        <% else %>
+          <%= button_to "Unlike", like_path(params[:id]), method: :delete, class: "btn btn-light"%>
+        <% end %>
+        <button type="button" class="btn btn-light">Comment</button>
+      </div>
+    </div>
+
   </div> </div>
   <br />
 </div>

@@ -36,3 +36,15 @@
   color: #43474A;
   text-decoration: none;
 }
+
+.like-comment{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+}
+
+.post-buttons{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
