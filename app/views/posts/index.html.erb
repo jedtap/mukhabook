@@ -20,13 +20,19 @@
       <%# Main post %>
       <div class="card" id="<% p.id %>"> <div class="card-body" style="width: 40rem;">
         <h5 class="card-title">
-          <%= gravatar_image_tag( p.profile.user.email, gravatar: { size: 32 }, alt: p.profile.name, style: "border-radius: 50%;") %>
+
+          <% if p.profile.avatar.attached? %>
+            <%= image_tag p.profile.avatar, size: '32', style: "border-radius: 50%;" %>
+          <% else %>
+            <%= gravatar_image_tag( p.profile.user.email, gravatar: { size: 32 }, alt: p.profile.name, style: "border-radius: 50%;") %>
+          <% end %>
+
           <%= link_to p.profile.name, profile_path(p.profile_id), class: "profile-link" %>
           <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
             <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
           </span>
         </h5>
-        <p class="card-text"> <%= p.body %> </p>
+        <p class="card-text" style="padding-left: 40px;"> <%= p.body %> </p>
 
         <%# Like Comment counter and buttons %>
         <div class="like-comment">
@@ -51,8 +57,14 @@
         <%# Last comment %>
         <% if Comment.where(post_id: p.id).count > 0 %>
           <div class = "last-comment">
-            <%= gravatar_image_tag( p.comments.last.profile.user.email, gravatar: { size: 15 }, alt: p.comments.last.profile.name, style: "border-radius: 50%; justify-self: end;") %>
-            <%= link_to p.profile.name, profile_path(p.profile_id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
+
+            <% if p.comments.last.profile.avatar.attached? %>
+              <%= image_tag p.comments.last.profile.avatar, size: '15', style: "border-radius: 50%; justify-self: end;" %>
+            <% else %>
+              <%= gravatar_image_tag( p.comments.last.profile.user.email, gravatar: { size: 15 }, alt: p.comments.last.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+            <% end %>
+
+            <%= link_to p.comments.last.profile.name, profile_path(p.comments.last.profile.id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
             <%= p.comments.last.body %>
           </div>
         <% end %>

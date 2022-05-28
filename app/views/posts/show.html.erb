@@ -6,7 +6,13 @@
   <div class="postshow">
     <div class="card"> <div class="card-body" style="width: 40rem;">
       <h5 class="card-title">
-        <%= gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
+
+        <% if Post.find(params[:id]).profile.avatar.attached? %>
+          <%= image_tag Post.find(params[:id]).profile.avatar, size: '32', style: "border-radius: 50%;" %>
+        <% else %>
+          <%= gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
+        <% end %>
+
         <%= link_to @post.profile.name, profile_path(@post.profile_id), class: "profile-link" %>
       </h5>
 
@@ -48,7 +54,14 @@
         <div>
           <% Comment.where(post_id: params[:id]).each do |c| %>
             <div class = "last-comment">
-              <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+
+              <% if c.profile.avatar.attached? %>
+                <%= image_tag c.profile.avatar, size: '15', style: "border-radius: 50%; justify-self: end;" %>
+              <% else %>
+                <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+              <% end %>
+
+
               <%= link_to c.profile.name, profile_path(c.profile_id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
               <%= c.body %>
             </div>

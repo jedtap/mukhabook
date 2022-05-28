@@ -1,9 +1,19 @@
 <div class="postsindex">
 
-  <h5>Meet and greet</h5>
-  <h3><%= @profile.name %>!</h3>
-  <h6>Interests: <%= @profile.interests %></h6>
-
+  <div style="display:flex; align-items: center; gap: 20px;">
+    <div>
+      <% if @profile.avatar.attached? %>
+        <%= image_tag @profile.avatar, size: '80', style: "border-radius: 50%;" %>
+      <% else %>
+        <%= gravatar_image_tag( @profile.user.email, gravatar: { size: 80 }, alt: @profile.name, style: "border-radius: 50%;") %>
+      <% end %>
+    </div>
+    <div>
+      <h5>Meet and greet</h5>
+      <h3><%= @profile.name %>!</h3>
+      <h6>Interests: <%= @profile.interests %></h6>
+    </div>
+  </div>
   <%# Add a friend, accept request, cancel request, unfriend button %>
   <% unless current_user.profile.id.to_s  == params[:id].to_s %>
     <div data-turbolinks="false">
@@ -51,13 +61,19 @@
     <% @posts.each do |p| %>
       <div class="card"> <div class="card-body" style="width: 40rem;">
         <h5 class="card-title">
-          <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 32 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
+
+          <% if p.profile.avatar.attached? %>
+            <%= image_tag p.profile.avatar, size: '32', style: "border-radius: 50%;" %>
+          <% else %>
+            <%= gravatar_image_tag( p.profile.user.email, gravatar: { size: 32 }, alt: p.profile.name, style: "border-radius: 50%;") %>
+          <% end %>
+
           <%= @profile.name %>
           <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
             <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
           </span>
         </h5>
-        <p class="card-text"> <%= p.body %> </p>
+        <p class="card-text" style="padding-left: 40px;"> <%= p.body %> </p>
 
         <div class="like-comment">
           <p style="font-size: 11px">
@@ -78,10 +94,16 @@
           </div>
         </div>
         
-        <%# Last posts %>
+        <%# Last comment %>
         <% if Comment.where(post_id: p.id).count > 0 %>
           <div class = "last-comment">
-            <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
+
+          <% if p.comments.last.profile.avatar.attached? %>
+            <%= image_tag p.comments.last.profile.avatar, size: '15', style: "border-radius: 50%; justify-self: end;" %>
+          <% else %>
+            <%= gravatar_image_tag( p.comments.last.profile.user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
+          <% end %>
+
 
             <% if params[:id].to_s == p.comments.last.profile.id.to_s %>
               <b style="font-size: 12px; justify-self: end;"><%= p.comments.last.profile.name %>: </b> 

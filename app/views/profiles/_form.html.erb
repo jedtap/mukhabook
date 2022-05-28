@@ -11,8 +11,20 @@
     </div>
   <% end %>
 
-  <br />
 
+  <% if profile.avatar.attached? %>
+    <%= image_tag profile.avatar, size: '100', style: "border-radius: 50%;" %>
+  <% else %>
+    <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 100 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
+  <% end %>
+
+
+  <br/>  <br/>
+  <div class="field">
+    <%= form.file_field :avatar %>
+  </div>
+
+  <br/>
   <div class="field" style="width: 30rem;">
     <%= form.text_field :name, class: "form-control" %>
   </div> 
