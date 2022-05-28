@@ -2,7 +2,7 @@
 
   <h5>Meet and greet</h5>
   <h3><%= @profile.name %>!</h3>
-
+  <h6>Interests: <%= @profile.interests %></h6>
 
   <%# Add a friend, accept request, cancel request, unfriend button %>
   <% unless current_user.profile.id.to_s  == params[:id].to_s %>
