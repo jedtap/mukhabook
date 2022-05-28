@@ -48,3 +48,10 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+.comment-box{
+  display: grid;
+  grid-template-columns: 20% auto ;
+  align-items: center;
+  gap: 7px
+}
