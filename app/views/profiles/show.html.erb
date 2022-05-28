@@ -45,68 +45,72 @@
 
   <br />
 
+  <%# Generate posts.. if you are friends %>
+  <% if params[:id].to_s == current_user.profile.id.to_s || @friends && @confirmed %>
 
-  <%# Generate posts %>
-  <% @posts.each do |p| %>
-    <div class="card"> <div class="card-body" style="width: 40rem;">
-      <h5 class="card-title">
-        <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 32 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
-        <%= @profile.name %>
-        <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
-          <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
-        </span>
-      </h5>
-      <p class="card-text"> <%= p.body %> </p>
+    <% @posts.each do |p| %>
+      <div class="card"> <div class="card-body" style="width: 40rem;">
+        <h5 class="card-title">
+          <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 32 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
+          <%= @profile.name %>
+          <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+            <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
+          </span>
+        </h5>
+        <p class="card-text"> <%= p.body %> </p>
 
-      <div class="like-comment">
-        <p style="font-size: 11px">
-          Likes: <%= Like.where(post_id: p.id).count %>
-          Comments: <%= Comment.where(post_id: p.id).count %>.
-        </p>
-        <div class="post-buttons">
-          <% if Like.where(post_id: p.id).where(profile_id: current_user.profile.id).empty? %>
-            <%= form_with url: "/likes" do |form| %> 
-              <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
-              <%= form.number_field :post_id, value: p.id, type: :hidden %>
-              <%= form.submit "Like", class: "btn btn-light" %>
+        <div class="like-comment">
+          <p style="font-size: 11px">
+            Likes: <%= Like.where(post_id: p.id).count %>
+            Comments: <%= Comment.where(post_id: p.id).count %>.
+          </p>
+          <div class="post-buttons">
+            <% if Like.where(post_id: p.id).where(profile_id: current_user.profile.id).empty? %>
+              <%= form_with url: "/likes" do |form| %> 
+                <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+                <%= form.number_field :post_id, value: p.id, type: :hidden %>
+                <%= form.submit "Like", class: "btn btn-light" %>
+              <% end %>
+            <% else %>
+              <%= button_to "Unlike", like_path(p.id), method: :delete, class: "btn btn-light"%>
             <% end %>
-          <% else %>
-            <%= button_to "Unlike", like_path(p.id), method: :delete, class: "btn btn-light"%>
-          <% end %>
-          <%= link_to "See comments", p, class: "btn btn-light" %>
+            <%= link_to "See comments", p, class: "btn btn-light" %>
+          </div>
         </div>
-      </div>
-      
-      <%# Last posts %>
-      <% if Comment.where(post_id: p.id).count > 0 %>
-        <div class = "last-comment">
-          <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
+        
+        <%# Last posts %>
+        <% if Comment.where(post_id: p.id).count > 0 %>
+          <div class = "last-comment">
+            <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
 
-          <% if params[:id].to_s == p.comments.last.profile.id.to_s %>
-            <b style="font-size: 12px; justify-self: end;"><%= p.comments.last.profile.name %>: </b> 
-          <% else %>
-            <%= link_to p.comments.last.profile.name, profile_path(p.comments.last.profile.id), class: "profile-link", style: "font-size:12px;font-weight:bold;"%>
-          <% end %>
+            <% if params[:id].to_s == p.comments.last.profile.id.to_s %>
+              <b style="font-size: 12px; justify-self: end;"><%= p.comments.last.profile.name %>: </b> 
+            <% else %>
+              <%= link_to p.comments.last.profile.name, profile_path(p.comments.last.profile.id), class: "profile-link", style: "font-size:12px;font-weight:bold;"%>
+            <% end %>
 
-          <%= p.comments.last.body %>
-        </div>
-      <% end %>
-
-      <%# Comment box %>
-      <div class="comment-box">
-        <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
-
-        <%= form_with url: "/comments" do |form| %> 
-          <%= form.text_field :body, placeholder: "Write a comment", class: "form-control", style: "width: fill;  border: 0 ;" %>
-          <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
-          <%= form.number_field :post_id, value: p.id, type: :hidden %>
-          <%= form.submit type: :hidden %>
+            <%= p.comments.last.body %>
+          </div>
         <% end %>
-      </div>
 
-    </div> </div>
-    <br />
+        <%# Comment box %>
+        <div class="comment-box">
+          <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
+
+          <%= form_with url: "/comments" do |form| %> 
+            <%= form.text_field :body, placeholder: "Write a comment", class: "form-control", style: "width: fill;  border: 0 ;" %>
+            <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+            <%= form.number_field :post_id, value: p.id, type: :hidden %>
+            <%= form.submit type: :hidden %>
+          <% end %>
+        </div>
+
+      </div> </div>
+      <br />
+    <% end %>
   <% end %>
+
+
 </div>
 
 <br /><br />

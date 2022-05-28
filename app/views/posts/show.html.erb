@@ -1,71 +1,79 @@
-<div class="postshow">
-  <div class="card"> <div class="card-body" style="width: 40rem;">
-    <h5 class="card-title">
-      <%= gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
-      <%= link_to @post.profile.name, profile_path(@post.profile_id), class: "profile-link" %>
-    </h5>
+<% if Friendship.where(user_id: Post.find(params[:id]).profile.user.id).where(friend_id: current_user.id).where(confirmed: 1).present? ||
+      Friendship.where(user_id: current_user.id).where(friend_id: Post.find(params[:id]).profile.user.id).where(confirmed: 1).present? ||
+      Post.find(params[:id]).profile.id == current_user.profile.id %>
 
-    <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
-      Created at: <%= @post.created_at.strftime("%b %d, %Y - %l:%M %p") %>
-    </span>
 
-    <br />
-  
-    <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
-      Last update: <%= @post.updated_at.strftime("%b %d, %Y - %l:%M %p") %>
-    </span>
+  <div class="postshow">
+    <div class="card"> <div class="card-body" style="width: 40rem;">
+      <h5 class="card-title">
+        <%= gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
+        <%= link_to @post.profile.name, profile_path(@post.profile_id), class: "profile-link" %>
+      </h5>
 
-    <br /><br />
+      <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+        Created at: <%= @post.created_at.strftime("%b %d, %Y - %l:%M %p") %>
+      </span>
 
-    <p class="card-text"> <%= @post.body %> </p>
+      <br />
+    
+      <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
+        Last update: <%= @post.updated_at.strftime("%b %d, %Y - %l:%M %p") %>
+      </span>
 
-    <div class="like-comment">
-      <p style="font-size: 11px">
-        Likes: <%= Like.where(post_id: params[:id]).count %>. 
-        Comments: <%= Comment.where(post_id: params[:id]).count %>.
-      </p>
-      <div class="post-buttons">
-        <% if Like.where(post_id: params[:id]).where(profile_id: current_user.profile.id).empty? %>
-          <%= form_with url: "/likes" do |form| %> 
-            <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
-            <%= form.number_field :post_id, value: params[:id], type: :hidden %>
-            <%= form.submit "Like", class: "btn btn-light" %>
+      <br /><br />
+
+      <p class="card-text"> <%= @post.body %> </p>
+
+      <div class="like-comment">
+        <p style="font-size: 11px">
+          Likes: <%= Like.where(post_id: params[:id]).count %>. 
+          Comments: <%= Comment.where(post_id: params[:id]).count %>.
+        </p>
+        <div class="post-buttons">
+          <% if Like.where(post_id: params[:id]).where(profile_id: current_user.profile.id).empty? %>
+            <%= form_with url: "/likes" do |form| %> 
+              <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+              <%= form.number_field :post_id, value: params[:id], type: :hidden %>
+              <%= form.submit "Like", class: "btn btn-light" %>
+            <% end %>
+          <% else %>
+            <%= button_to "Unlike", like_path(params[:id]), method: :delete, class: "btn btn-light"%>
           <% end %>
-        <% else %>
-          <%= button_to "Unlike", like_path(params[:id]), method: :delete, class: "btn btn-light"%>
-        <% end %>
+        </div>
       </div>
-    </div>
 
 
-    <%# Last posts %>
-    <% if Comment.where(post_id: params[:id]).count > 0 %>
-      <div>
-        <% Comment.where(post_id: params[:id]).each do |c| %>
-          <div class = "last-comment">
-            <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
-            <%= link_to c.profile.name, profile_path(c.profile_id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
-            <%= c.body %>
-          </div>
-        <% end %>
-      </div>
-    
-    
-    <% end %>
-
-    <%# Comment box %>
-    <div class="comment-box">
-      <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
-
-      <%= form_with url: "/comments" do |form| %> 
-        <%= form.text_field :body, placeholder: "Write a comment", class: "form-control", style: "width: fill;  border: 0;" %>
-        <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
-        <%= form.number_field :post_id, value: params[:id], type: :hidden %>
-        <%= form.submit type: :hidden %>
+      <%# Last posts %>
+      <% if Comment.where(post_id: params[:id]).count > 0 %>
+        <div>
+          <% Comment.where(post_id: params[:id]).each do |c| %>
+            <div class = "last-comment">
+              <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+              <%= link_to c.profile.name, profile_path(c.profile_id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
+              <%= c.body %>
+            </div>
+          <% end %>
+        </div>
+      
+      
       <% end %>
-    </div>
+
+      <%# Comment box %>
+      <div class="comment-box">
+        <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
+
+        <%= form_with url: "/comments" do |form| %> 
+          <%= form.text_field :body, placeholder: "Write a comment", class: "form-control", style: "width: fill;  border: 0;" %>
+          <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+          <%= form.number_field :post_id, value: params[:id], type: :hidden %>
+          <%= form.submit type: :hidden %>
+        <% end %>
+      </div>
 
 
-  </div> </div>
-  <br />
-</div>
+    </div> </div>
+    <br />
+  </div>
+<% else %>
+  <h4> Hey, your not even friends!</h4>
+<% end %>
