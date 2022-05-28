@@ -1,0 +1,25 @@
+<% if @fri_inv.count > 0 %>
+  <h3> New friend requests! </h3>
+  <ul>
+    <% @fri_inv.each do |f| %>
+      <li>
+        <%= link_to User.find(f.user_id).profile.name, profile_path(f.user_id), class: "profile-link", style: "font-size:24px;" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<br />
+
+<% if @fri.count > 0 %>
+  <h4> Pending friend response</h4>
+  <ul>
+    <% @fri.each do |f| %>
+      <li>
+        <%= link_to User.find(f.friend_id).profile.name, profile_path(f.friend_id), class: "profile-link", style: "font-size:24px;" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+

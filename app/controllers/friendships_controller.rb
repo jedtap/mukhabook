@@ -1,5 +1,10 @@
 class FriendshipsController < ApplicationController
 
+  def index
+    @fri = Friendship.where(user_id: current_user.id).where(confirmed: 0)
+    @fri_inv = Friendship.where(friend_id: current_user.id).where(confirmed: 0)
+  end
+
   def create
     @fri = current_user.friendships.build
     @fri.friend_id = params[:friend_id]

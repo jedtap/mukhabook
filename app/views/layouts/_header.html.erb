@@ -16,6 +16,14 @@
         <% if user_signed_in? %>
           <li class="nav-item"> <%= link_to "Find a friend", friends_path, class:"nav-link" %> </li>
           <li class="nav-item"> <%= link_to current_user.profile.name, current_user.profile , class:"nav-link"%> </li>
+          <li class="nav-item">
+            <% if  Friendship.where(friend_id: current_user.id).where(confirmed: 0).count > 0 %>
+              <%= link_to "New friend request!", friendships_path , class:"nav-link new-friend-notif"%>
+            <% elsif Friendship.where(user_id: current_user.id).where(confirmed: 0).count > 0 %>
+              <%= link_to "Friend requests", friendships_path , class:"nav-link"%>
+            <% else %>
+            <% end %>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Menu
