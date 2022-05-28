@@ -50,6 +50,7 @@
   <% @posts.each do |p| %>
     <div class="card"> <div class="card-body" style="width: 40rem;">
       <h5 class="card-title">
+        <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 32 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
         <%= @profile.name %>
         <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
           <%= link_to p.created_at.strftime("%b %d, %Y - %l:%M %p"), p, class: "profile-link" %>
@@ -79,6 +80,7 @@
       <%# Last posts %>
       <% if Comment.where(post_id: p.id).count > 0 %>
         <div class = "last-comment">
+          <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
           <b style="font-size: 12px; justify-self: end;"><%= Profile.find(p.comments.last.profile_id).name %>: </b> 
           <%= p.comments.last.body %>
         </div>

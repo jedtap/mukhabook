@@ -58,7 +58,7 @@
 
 .last-comment{
   display: grid;
-  grid-template-columns: 17% auto ;
+  grid-template-columns: 7% auto 1fr ;
   align-items: center;
   gap: 7px
 }
