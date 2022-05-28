@@ -13,7 +13,7 @@
   <% @posts.each do |p| %>
 
     <%# Main post %>
-    <div class="card"> <div class="card-body" style="width: 40rem;">
+    <div class="card" id="<% p.id %>"> <div class="card-body" style="width: 40rem;">
       <h5 class="card-title">
         <%= link_to p.profile.name, profile_path(p.profile_id), class: "profile-link" %>
         <span class="card-subtitle mb-2 text-muted" style="font-size: 12px">
@@ -42,6 +42,14 @@
         </div>
       </div>
     
+      <%# Last posts %>
+      <% if Comment.where(post_id: p.id).count > 0 %>
+        <div class = "last-comment">
+          <b style="font-size: 12px; justify-self: end;"><%= Profile.find(p.comments.last.profile_id).name %>: </b> 
+          <%= p.comments.last.body %>
+        </div>
+      <% end %>
+
       <%# Comment box %>
       <div class="comment-box">
         <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
