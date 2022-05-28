@@ -44,7 +44,7 @@
         <% Comment.where(post_id: params[:id]).each do |c| %>
           <div class = "last-comment">
             <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
-            <b style="font-size: 12px; justify-self: end;"><%= Profile.find(c.profile_id).name %>: </b> 
+            <%= link_to c.profile.name, profile_path(c.profile_id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>
             <%= c.body %>
           </div>
         <% end %>

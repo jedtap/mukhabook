@@ -81,7 +81,13 @@
       <% if Comment.where(post_id: p.id).count > 0 %>
         <div class = "last-comment">
           <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 15 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%; justify-self: end;") %>
-          <b style="font-size: 12px; justify-self: end;"><%= Profile.find(p.comments.last.profile_id).name %>: </b> 
+
+          <% if params[:id].to_s == p.comments.last.profile.id.to_s %>
+            <b style="font-size: 12px; justify-self: end;"><%= p.comments.last.profile.name %>: </b> 
+          <% else %>
+            <%= link_to p.comments.last.profile.name, profile_path(p.comments.last.profile.id), class: "profile-link", style: "font-size:12px;font-weight:bold;"%>
+          <% end %>
+
           <%= p.comments.last.body %>
         </div>
       <% end %>
