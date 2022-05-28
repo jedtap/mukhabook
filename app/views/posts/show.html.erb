@@ -19,7 +19,10 @@
     <p class="card-text"> <%= @post.body %> </p>
 
     <div class="like-comment">
-      <p style="font-size: 11px">Likes: <%= Like.where(post_id: params[:id]).count %> Comments: 69 </p>
+      <p style="font-size: 11px">
+        Likes: <%= Like.where(post_id: params[:id]).count %>. 
+        Comments: <%= Comment.where(post_id: params[:id]).count %>.
+      </p>
       <div class="post-buttons">
         <% if Like.where(post_id: params[:id]).where(profile_id: current_user.profile.id).empty? %>
           <%= form_with url: "/likes" do |form| %> 
@@ -32,6 +35,34 @@
         <% end %>
       </div>
     </div>
+
+
+    <%# Last posts %>
+    <% if Comment.where(post_id: params[:id]).count > 0 %>
+      <div>
+        <% Comment.where(post_id: params[:id]).each do |c| %>
+          <div class = "last-comment">
+            <b style="font-size: 12px; justify-self: end;"><%= Profile.find(c.profile_id).name %>: </b> 
+            <%= c.body %>
+          </div>
+        <% end %>
+      </div>
+    
+    
+    <% end %>
+
+    <%# Comment box %>
+    <div class="comment-box">
+      <b style="font-size: 12px; justify-self: end;"><%= current_user.profile.name %>: </b> 
+
+      <%= form_with url: "/comments" do |form| %> 
+        <%= form.text_field :body, placeholder: "Write a comment", class: "form-control", style: "width: fill;  border: 0;" %>
+        <%= form.number_field :profile_id, value: current_user.profile.id, type: :hidden %>
+        <%= form.number_field :post_id, value: params[:id], type: :hidden %>
+        <%= form.submit type: :hidden %>
+      <% end %>
+    </div>
+
 
   </div> </div>
   <br />
