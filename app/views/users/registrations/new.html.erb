@@ -49,6 +49,11 @@
         <%= f.submit "Sign up", class: "btn btn-success" %>
       </div>
     <% end %>
+    <br/>
+
+    <div>
+      <%= link_to "Sign up with Google", "/auth/google_oauth2", method: :post, class: "btn btn-outline-primary" %>
+    </div>
 
     <div>
       <br>Already have an account? <%= render "devise/shared/links" %>
@@ -56,7 +61,3 @@
 
   </div>
 </div>
-
-
-
-

@@ -16,6 +16,9 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'gravatar_image_tag', '~> 1.2'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
+gem "figaro"
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

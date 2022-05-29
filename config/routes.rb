@@ -17,4 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/auth/google_oauth2/callback", to: "omniauth_callbacks#google"
+
+
 end
