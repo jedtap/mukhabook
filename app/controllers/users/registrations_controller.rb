@@ -18,6 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @profile.name = resource.name
       @profile.user_id = resource.id
       @profile.save
+      WelcomeMailer.with(email: resource.email, name: resource.name).welcome_email.deliver_later
     end
   end
 

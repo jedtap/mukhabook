@@ -19,6 +19,7 @@ gem 'image_processing', '~> 1.12', '>= 1.12.2'
 gem "figaro"
 gem 'omniauth-google-oauth2'
 gem "omniauth-rails_csrf_protection"
+gem "letter_opener", group: :development
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
