@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
   database: mukhabook_production
   username: mukhabook
   password: <%= ENV["MUKHABOOK_DATABASE_PASSWORD"] %>
