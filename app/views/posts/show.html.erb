@@ -10,7 +10,8 @@
         <% if Post.find(params[:id]).profile.avatar.attached? %>
           <%= image_tag Post.find(params[:id]).profile.avatar, size: '32', style: "border-radius: 50%;" %>
         <% else %>
-          <%= gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
+          <img src="https://photo-cdn2.icons8.com/NqCtohJjuX8Rb8yuYNOO07iy9wS6FgUpDZTAmG4o35k/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5l/eHRlcm5hbC9hMmE0/Mi8yMDYzMGNmYzRk/OWY0YTMzYTVjZWZl/MWFmM2Y5MTQwZS5q/cGc.jpg" alt="Close up photo of a cat" width="32" height="32" style="border-radius: 50%;">
+          <%# gravatar_image_tag( Post.find(params[:id]).profile.user.email, gravatar: { size: 32 }, alt: Post.find(params[:id]).profile.name, style: "border-radius: 50%;") %>
         <% end %>
 
         <%= link_to @post.profile.name, profile_path(@post.profile_id), class: "profile-link" %>
@@ -58,7 +59,8 @@
               <% if c.profile.avatar.attached? %>
                 <%= image_tag c.profile.avatar, size: '15', style: "border-radius: 50%; justify-self: end;" %>
               <% else %>
-                <%= gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+                <img src="https://photo-cdn2.icons8.com/NqCtohJjuX8Rb8yuYNOO07iy9wS6FgUpDZTAmG4o35k/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5l/eHRlcm5hbC9hMmE0/Mi8yMDYzMGNmYzRk/OWY0YTMzYTVjZWZl/MWFmM2Y5MTQwZS5q/cGc.jpg" alt="Close up photo of a cat" width="32" height="32" style="border-radius: 50%; justify-self: end;">
+                <%# gravatar_image_tag( c.profile.user.email, gravatar: { size: 15 }, alt: c.profile.name, style: "border-radius: 50%; justify-self: end;") %>
               <% end %>
 
 

@@ -24,7 +24,8 @@
           <% if p.profile.avatar.attached? %>
             <%= image_tag p.profile.avatar, size: '32', style: "border-radius: 50%;" %>
           <% else %>
-            <%= gravatar_image_tag( p.profile.user.email, gravatar: { size: 32 }, alt: p.profile.name, style: "border-radius: 50%;") %>
+            <img src="https://photo-cdn2.icons8.com/NqCtohJjuX8Rb8yuYNOO07iy9wS6FgUpDZTAmG4o35k/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5l/eHRlcm5hbC9hMmE0/Mi8yMDYzMGNmYzRk/OWY0YTMzYTVjZWZl/MWFmM2Y5MTQwZS5q/cGc.jpg" alt="Close up photo of a cat" width="32" height="32" style="border-radius: 50%;">
+            <%# gravatar_image_tag( p.profile.user.email, gravatar: { size: 32 }, alt: p.profile.name, style: "border-radius: 50%;") %>
           <% end %>
 
           <%= link_to p.profile.name, profile_path(p.profile_id), class: "profile-link" %>
@@ -61,7 +62,8 @@
             <% if p.comments.last.profile.avatar.attached? %>
               <%= image_tag p.comments.last.profile.avatar, size: '15', style: "border-radius: 50%; justify-self: end;" %>
             <% else %>
-              <%= gravatar_image_tag( p.comments.last.profile.user.email, gravatar: { size: 15 }, alt: p.comments.last.profile.name, style: "border-radius: 50%; justify-self: end;") %>
+              <img src="https://photo-cdn2.icons8.com/NqCtohJjuX8Rb8yuYNOO07iy9wS6FgUpDZTAmG4o35k/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5l/eHRlcm5hbC9hMmE0/Mi8yMDYzMGNmYzRk/OWY0YTMzYTVjZWZl/MWFmM2Y5MTQwZS5q/cGc.jpg" alt="Close up photo of a cat" width="15" height="15" style="border-radius: 50%; justify-self: end">
+              <%# gravatar_image_tag( p.comments.last.profile.user.email, gravatar: { size: 15 }, alt: p.comments.last.profile.name, style: "border-radius: 50%; justify-self: end;") %>
             <% end %>
 
             <%= link_to p.comments.last.profile.name, profile_path(p.comments.last.profile.id), class: "profile-link", style: "font-size:12px;font-weight:bold;" %>

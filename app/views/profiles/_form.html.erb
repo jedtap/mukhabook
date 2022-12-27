@@ -15,7 +15,8 @@
   <% if profile.avatar.attached? %>
     <%= image_tag profile.avatar, size: '100', style: "border-radius: 50%;" %>
   <% else %>
-    <%= gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 100 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
+    <img src="https://photo-cdn2.icons8.com/NqCtohJjuX8Rb8yuYNOO07iy9wS6FgUpDZTAmG4o35k/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5l/eHRlcm5hbC9hMmE0/Mi8yMDYzMGNmYzRk/OWY0YTMzYTVjZWZl/MWFmM2Y5MTQwZS5q/cGc.jpg" alt="Close up photo of a cat" width="100" height="100" style="border-radius: 50%;">
+    <%# gravatar_image_tag( Profile.find(params[:id]).user.email, gravatar: { size: 100 }, alt: Profile.find(params[:id]).name, style: "border-radius: 50%;") %>
   <% end %>
 
 
