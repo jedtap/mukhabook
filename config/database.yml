@@ -82,6 +82,6 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
-  database: mukhabook_production
-  username: mukhabook
+  database: railwayapp_production
+  username: railwayapp
   password: <%= ENV["MUKHABOOK_DATABASE_PASSWORD"] %>
