@@ -6,7 +6,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.server_timing = true
 
-  config.hosts << "rails-production-049e.up.railway.app"
+  config.hosts << "rails-production-b6b8.up.railway.app"
 
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
